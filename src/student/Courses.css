@@ -1,0 +1,478 @@
+/* ================= ROOT ================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+   overflow-y: auto;
+}
+
+/* ================= CONTAINER ================= */
+.roadmap-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px;
+}
+
+/* ================= BACK BUTTON ================= */
+.back-btn {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  font-weight: 700;
+  color: #667eea;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn:hover {
+  background: #ffffff;
+  transform: translateX(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ================= TOP BAR ================= */
+.top-bar {
+  
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 120px;
+  margin-top: 35px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 32px 36px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 8px 0;
+  text-shadow: none;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #64748b;
+  margin: 0;
+  font-weight: 600;
+}
+
+.syllabus-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.syllabus-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+}
+
+/* ================= QUIZ CARD ================= */
+
+/* PASSED STATE */
+.quiz-card.passed {
+  border-left: 8px solid #10b981;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #10b981;
+}
+
+.quiz-card.passed p {
+  font-size: 18px;
+  font-weight: 700;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================= QUESTION ================= */
+.question {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+/* ================= OPTIONS ================= */
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.option {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 3px solid #e2e8f0;
+  padding: 18px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  color: #334155;
+}
+
+.option:hover {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.option input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #667eea;
+  cursor: pointer;
+}
+
+/* ================= ACTION BUTTONS ================= */
+.quiz-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.quiz-btn {
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.quiz-btn:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.4);
+}
+
+/* ================= COURSE COMPLETE ================= */
+.course-complete {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 40px;
+  box-shadow: 0 20px 50px rgba(16, 185, 129, 0.4);
+  animation: celebrate 0.6s ease;
+}
+
+@keyframes celebrate {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.course-complete h2 {
+  font-size: 32px;
+  margin-bottom: 12px;
+  font-weight: 800;
+  color: white !important;
+}
+
+.course-complete p {
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+/* ================= ROADMAP GRID ================= */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  margin-top: 30px;
+}
+
+/* ================= ROADMAP CARD ================= */
+.roadmap-card {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  border-top: 6px solid #667eea;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.roadmap-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.roadmap-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+}
+
+.roadmap-card h3 {
+  font-size: 22px;
+  margin-bottom: 18px;
+  color: #1e293b;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ================= ROADMAP LIST ================= */
+.roadmap-card ul {
+  padding-left: 22px;
+}
+
+.roadmap-card li {
+  margin-bottom: 12px;
+  color: #475569;
+  line-height: 1.6;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.roadmap-card li::marker {
+  color: #667eea;
+  font-weight: bold;
+}
+
+/* ================= RESOURCES ================= */
+.resources {
+  margin-top: 60px;
+}
+
+.resources h2 {
+  font-size: 32px;
+  margin-bottom: 25px;
+  color: #000;
+  font-weight: 800;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 20px 30px;
+  border-radius: 16px;
+  display: inline-block;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ================= RESOURCE CARDS ================= */
+.resource-link {
+  text-decoration: none;
+}
+
+.resource-card {
+  background: white;
+  color: #1e293b;
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 3px solid transparent;
+  border-left: 6px solid #667eea;
+}
+
+.resource-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(102, 126, 234, 0.3);
+  border-color: #667eea;
+}
+
+.resource-card h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.resource-card p {
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 768px) {
+  .roadmap-container {
+    padding: 20px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .syllabus-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .quiz-card {
+    padding: 25px;
+  }
+
+  .quiz-card h3 {
+    font-size: 22px;
+  }
+
+  .question {
+    font-size: 18px;
+  }
+
+  .options {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-actions {
+    flex-direction: column;
+  }
+
+  .quiz-btn {
+    width: 100%;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* new add csss */
+.start-btn {
+  padding: 12px 20px;
+  background: black;
+  color: white;
+  border: none;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+/* FULLSCREEN */
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1000;
+  padding: 30px;
+}
+
+.timer {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+/* quiz card*/
+/* QUIZ CARD */
+.quiz-card-ui {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 32px 36px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+/* HEADER FLEX */
+.quiz-header-ui {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* TITLE */
+.quiz-header-ui h2 {
+  color: #5a67d8;
+  margin: 0;
+}
+
+/* START BUTTON SAME AS ROADMAP */
+.start-btn-ui {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* HOVER */
+.start-btn-ui:hover {
+  transform: translateY(-2px);
+} 
