@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Courses.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 /* ================= QUESTIONS ================= */
 const htmlQuestions = [
@@ -65,24 +66,36 @@ function QuizCard({ title, questions, passed, onFinish }) {
   };
 
   /* SUBMIT */
-  const submitQuiz = () => {
-    const score = calculateScore();
+  const submitQuiz = async () => {
+  const score = calculateScore();
+  const total = questions.length * 4;
+  const passed = score >= 15;
 
-    if (score >= 15) {
-      setSubmitted(true);
-      onFinish(true);
-    } else {
-      alert("❌ You failed! Try again.");
+  try {
+    await axios.post("http://localhost:5000/api/student/save-quiz", {
+      email: "mithilexample@gmail.com", 
+      quizName: "Frontend",
+      score,
+      total,
+      passed
+    });
+  } catch (err) {
+    console.log("Save error:", err);
+  }
 
-      setStartTest(false);
-      setCurrent(0);
-      setAnswers({});
-      setTimeLeft(30);
-      setVisited({});
-
-      onFinish(false);
-    }
-  };
+  if (passed) {
+    setSubmitted(true);
+    onFinish(true);
+  } else {
+    alert("❌ You failed! Try again.");
+    setStartTest(false);
+    setCurrent(0);
+    setAnswers({});
+    setTimeLeft(30);
+    setVisited({});
+    onFinish(false);
+  }
+};
 
   /* TIMER */
   useEffect(() => {

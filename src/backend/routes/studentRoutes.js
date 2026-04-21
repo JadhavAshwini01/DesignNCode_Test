@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../config/db");
 const otpStore = require("../utils/otpStore");
 const sendOtpMail = require("../utils/sendOtpMail");
+const { saveQuizResult } = require("../StudentPages/QuizResults");
 
 /* =====================================================
    1️⃣ SEND STUDENT OTP (REGISTRATION)
@@ -158,6 +159,31 @@ router.get("/all", (req, res) => {
       res.json(result);
     }
   );
+});
+
+router.post("/save-quiz", saveQuizResult);
+
+router.get("/progress/:email", (req, res) => {
+  const { email } = req.params;
+
+  const sql = `
+    SELECT quiz_name, MAX(score) as best_score, MAX(total) as total
+    FROM quiz_results_student
+    WHERE student_email = ?
+    GROUP BY quiz_name
+  `;
+
+  db.query(sql, [email], (err, result) => {
+    if (err) {
+      console.log("DB ERROR:", err);   // 🔥 add this
+      return res.status(500).json({
+        message: "DB error",
+        error: err   // 🔥 expose real error temporarily
+      });
+    }
+
+    res.json(result);
+  });
 });
 
 module.exports = router;

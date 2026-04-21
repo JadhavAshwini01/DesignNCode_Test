@@ -1,14 +1,38 @@
 import "./StudentProgress.css";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const StudentProgress = () => {
+  const [progressData, setProgressData] = useState([]);
+
   const navigate = useNavigate();
 
-  const progressData = [
-    { skill: "HTML", progress: 100 },
-    { skill: "CSS", progress: 60 },
-    { skill: "JavaScript", progress: 30 },
-  ];
+  useEffect(() => {
+    const email = "mithilexample@gmail.com";
+
+    axios
+      .get(`http://localhost:5000/api/student/progress/${email}`)
+      .then((res) => {
+        const formatted = res.data.map((item) => {
+          const progress = Math.round((item.best_score / item.total) * 100);
+
+          return {
+            skill: item.quiz_name,
+            progress
+          };
+        });
+
+        setProgressData(formatted);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  // const progressData = [
+  //   { skill: "HTML", progress: 100 },
+  //   { skill: "CSS", progress: 60 },
+  //   { skill: "JavaScript", progress: 30 },
+  // ];
 
   const totalProgress =
     progressData.reduce((acc, item) => acc + item.progress, 0) /
