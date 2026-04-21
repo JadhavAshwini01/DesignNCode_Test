@@ -15,6 +15,7 @@ const StudentDashboard = () => {
         <ul>
           <li onClick={() => navigate("/student/dashboard")}>Dashboard</li>
           <li onClick={() => navigate("/student/interviews")}>Interviews </li>
+          <li onClick={() => navigate("/student/progress")}>Progress Report</li>
           <li onClick={() => navigate("/")}>Logout</li>
 
           {/* <li onClick={() => navigate("/beginner")}>Beginner</li>

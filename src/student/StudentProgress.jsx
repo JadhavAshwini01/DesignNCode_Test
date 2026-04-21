@@ -1,0 +1,67 @@
+import "./StudentProgress.css";
+import { useNavigate } from "react-router-dom";
+
+const StudentProgress = () => {
+  const navigate = useNavigate();
+
+  const progressData = [
+    { skill: "HTML", progress: 100 },
+    { skill: "CSS", progress: 60 },
+    { skill: "JavaScript", progress: 30 },
+  ];
+
+  const totalProgress =
+    progressData.reduce((acc, item) => acc + item.progress, 0) /
+    progressData.length;
+
+  return (
+    <div className="container-progress">
+
+      {/* 🔥 BACK BUTTON */}
+      <button
+        className="back-btn"
+        onClick={() => navigate("/student/dashboard")}
+      >
+        ← Back
+      </button>
+
+      <div className="progress-page">
+
+        <h1 className="title-progress">Your Progress</h1>
+
+        <div className="dashboard_progress">
+
+          <div className="glass-card center">
+            <div className="circle">
+              <span>{Math.round(totalProgress)}%</span>
+            </div>
+            <p>Overall Completion</p>
+          </div>
+
+          <div className="glass-card">
+            <h3>Skills</h3>
+
+            {progressData.map((item, index) => (
+              <div key={index} className="skill">
+                <div className="skill-header">
+                  <span>{item.skill}</span>
+                  <span>{item.progress}%</span>
+                </div>
+
+                <div className="bar">
+                  <div
+                    className="fill"
+                    style={{ width: `${item.progress}%` }}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default StudentProgress;

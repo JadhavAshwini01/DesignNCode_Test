@@ -11,6 +11,8 @@ import Interviews from "./student/Interviews";
 import StudentLogin from "./student/StudentLogin";
 import StudentRegister from "./student/StudentRegister";
 import StudentDashboard from "./student/StudentDashboard";
+import StudentProgress from "./student/StudentProgress";
+
 import Beginner from "./student/Beginner";
 import Frontend from "./student/Frontend";
 import FrontendSyllabus from "./student/FrontendSyllabus";
@@ -78,6 +80,8 @@ function App() {
         <Route path="/student/register" element={<StudentRegister />} />
         <Route path="/student/dashboard" element={<StudentDashboard />} />
         <Route path="/student/interviews" element={<Interviews />} />
+        <Route path="/student/progress" element={<StudentProgress />} />
+
         <Route path="/beginner" element={<Beginner />} />
         <Route path="/frontend" element={<Frontend />} />
         <Route path="/frontend/syllabus" element={<FrontendSyllabus />} />
