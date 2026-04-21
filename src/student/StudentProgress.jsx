@@ -28,11 +28,7 @@ const StudentProgress = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  // const progressData = [
-  //   { skill: "HTML", progress: 100 },
-  //   { skill: "CSS", progress: 60 },
-  //   { skill: "JavaScript", progress: 30 },
-  // ];
+
 
   const totalProgress =
     progressData.reduce((acc, item) => acc + item.progress, 0) /
@@ -41,7 +37,6 @@ const StudentProgress = () => {
   return (
     <div className="container-progress">
 
-      {/* 🔥 BACK BUTTON */}
       <button
         className="back-btn"
         onClick={() => navigate("/student/dashboard")}
