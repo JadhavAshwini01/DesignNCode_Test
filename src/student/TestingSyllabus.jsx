@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function TestingSyllabus() {
   const navigate = useNavigate();
 
-  const roadmap = [
+  const syllabus = [
     {
       title: "Foundations (SDLC, STLC, Manual Testing Basics)",
       topics: [
@@ -74,12 +74,19 @@ function TestingSyllabus() {
   ];
 
   return (
-    <div className="roadmap-container">
+     <div className="roadmap-container">
+      {/* BACK BUTTON */}
+       <button className="back-btn" onClick={() => navigate("/beginner")}>
+        ← Back
+      </button>
       {/* TOP BAR */}
       <div className="top-bar">
-        <h1 className="title">Software Testing Roadmap</h1>
-        <button className="syllabus-btn" onClick={() => navigate("/testing")}>
-          Return to Test
+        <h1 className="title">Software Testing</h1>
+        <button
+          className="syllabus-btn"
+          onClick={() => navigate("/testing/quiz")}
+        >
+         -- Back to Quizzes
         </button>
       </div>
 
@@ -87,13 +94,11 @@ function TestingSyllabus() {
 
       {/* CARD GRID */}
       <div className="card-grid">
-        {roadmap.map((card, index) => (
+        {syllabus.map((item, index) => (
           <div className="roadmap-card" key={index}>
-            <h3>
-              {index + 1}. {card.title}
-            </h3>
+            <h3>{index + 1}. {item.title}</h3>
             <ul>
-              {card.topics.map((topic, i) => (
+              {item.topics.map((topic, i) => (
                 <li key={i}>{topic}</li>
               ))}
             </ul>
@@ -102,8 +107,8 @@ function TestingSyllabus() {
       </div>
 
       {/* RESOURCES */}
-      <section className="resources">
-        <h3>Resources</h3>
+      <section class="resources">
+        <h2>Resources</h2>
         <a
           href="https://www.youtube.com/watch?v=HylDB3bN6hQ"
           target="_blank"

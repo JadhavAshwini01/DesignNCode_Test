@@ -1,65 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
-const otpStore = require("../utils/otpStore");
-const sendOtpMail = require("../utils/sendOtpMail");
 
 /* =====================================================
-   1️⃣ SEND OTP (Company Registration)
+   1️⃣ COMPANY REGISTER
 ===================================================== */
-router.post("/send-otp", async (req, res) => {
-  const { email, formData } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ message: "Email required" });
-  }
-
-  const otp = Math.floor(100000 + Math.random() * 900000);
-
-  otpStore[email] = {
-    otp,
-    formData,
-    expiresAt: Date.now() + 5 * 60 * 1000 // 5 min
-  };
-
-  try {
-    await sendOtpMail(email, otp);
-    res.json({ message: "OTP sent to company email" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "OTP sending failed" });
-  }
-});
-
-/* =====================================================
-   2️⃣ VERIFY OTP & REGISTER COMPANY
-===================================================== */
-router.post("/verify-otp", (req, res) => {
-  const { email, otp } = req.body;
-
-  const record = otpStore[email];
-  if (!record) {
-    return res.status(400).json({ message: "OTP expired" });
-  }
-
-  if (Date.now() > record.expiresAt) {
-    delete otpStore[email];
-    return res.status(400).json({ message: "OTP expired" });
-  }
-
-  if (record.otp != otp) {
-    return res.status(400).json({ message: "Invalid OTP" });
-  }
-
+router.post("/register", (req, res) => {
   const {
     companyName,
     hrName,
+    email,
     phone,
     website,
     location,
     industry,
     password
-  } = record.formData;
+  } = req.body;
+
+  if (!companyName || !hrName || !email || !password) {
+    return res.status(400).json({ message: "Required fields missing" });
+  }
 
   const sql = `
     INSERT INTO companies
@@ -69,22 +29,11 @@ router.post("/verify-otp", (req, res) => {
 
   db.query(
     sql,
-    [
-      companyName,
-      hrName,
-      email,
-      phone,
-      website,
-      location,
-      industry,
-      password
-    ],
+    [companyName, hrName, email, phone, website, location, industry, password],
     (err) => {
-      delete otpStore[email];
-
       if (err) {
         if (err.code === "ER_DUP_ENTRY") {
-          return res.status(409).json({ message: "Company already registered" });
+          return res.status(409).json({ message: "Email already exists" });
         }
         return res.status(500).json({ message: "Database error" });
       }
@@ -95,29 +44,22 @@ router.post("/verify-otp", (req, res) => {
 });
 
 /* =====================================================
-   3️⃣ COMPANY LOGIN
+   2️⃣ COMPANY LOGIN
 ===================================================== */
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email and password required" });
-  }
-
   const sql = "SELECT * FROM companies WHERE email=? AND password=?";
 
   db.query(sql, [email, password], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Database error" });
-    }
+    if (err) return res.status(500).json({ message: "Database error" });
 
     if (result.length === 0) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
     res.json({
-      message: "Company login successful",
+      message: "Login successful",
       company: {
         id: result[0].id,
         companyName: result[0].company_name,
@@ -128,7 +70,7 @@ router.post("/login", (req, res) => {
 });
 
 /* =====================================================
-   4️⃣ ADD PROJECT (Company Dashboard)
+   3️⃣ ADD PROJECT (🔥 VERY IMPORTANT FIX)
 ===================================================== */
 router.post("/add-project", (req, res) => {
   const {
@@ -139,6 +81,10 @@ router.post("/add-project", (req, res) => {
     totalBudget,
     skilllevelrequired
   } = req.body;
+
+  if (!companyId) {
+    return res.status(400).json({ message: "Company ID missing" });
+  }
 
   const sql = `
     INSERT INTO projects
@@ -158,63 +104,13 @@ router.post("/add-project", (req, res) => {
     ],
     (err) => {
       if (err) {
-        console.error("Project DB error:", err);
+        console.error("Project Error:", err);
         return res.status(500).json({ message: "DB error" });
       }
 
-      res.json({ message: "Project added successfully" });
+      res.json({ message: "Project added successfully ✅" });
     }
   );
 });
-
-/* =====================================================
-   5️⃣ COMPANY DASHBOARD STATS
-===================================================== */
-router.get("/dashboard/:companyId", (req, res) => {
-  const { companyId } = req.params;
-
-  const sql = `
-    SELECT
-      COUNT(*) AS activeProjects,
-      IFNULL(SUM(budget),0) AS totalBudget
-    FROM projects
-    WHERE company_id=? AND status='active'
-  `;
-
-  db.query(sql, [companyId], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: "DB error" });
-    }
-
-    res.json(result[0]);
-  });
-});
-/* =========================================
-   COMPANY DASHBOARD STATS
-========================================= */
-router.get("/dashboard-stats/:companyId", (req, res) => {
-  const { companyId } = req.params;
-
-  const sql = `
-    SELECT 
-      COUNT(*) AS totalProjects,
-      COALESCE(SUM(budget), 0) AS totalBudget
-    FROM projects
-    WHERE company_id = ?
-  `;
-
-  db.query(sql, [companyId], (err, result) => {
-    if (err) {
-      console.error("Dashboard stats error:", err);
-      return res.status(500).json({ message: "DB error" });
-    }
-
-    res.json({
-      totalProjects: result[0].totalProjects,
-      totalBudget: result[0].totalBudget
-    });
-  });
-});
-
 
 module.exports = router;

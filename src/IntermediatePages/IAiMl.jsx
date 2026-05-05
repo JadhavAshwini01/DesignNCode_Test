@@ -1,161 +1,139 @@
-import { useState } from "react";
-import "./IFrontend.css"; // reuse same CSS
+import { useState, useEffect } from "react";
+//import "./IFrontend.css";
 import { useNavigate } from "react-router-dom";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
-/* ================== 10 QUESTIONS TOTAL ================== */
-const questions = [
-  // AI Basics
-  {
-    q: "What is Artificial Intelligence?",
-    options: [
-      "Programming with Java",
-      "Simulation of human intelligence in machines",
-      "Database management",
-      "Web development framework",
-    ],
-    answer: 1,
-  },
-  {
-    q: "Which of the following is an AI application?",
-    options: ["Compiler", "Search Engine", "Calculator", "Text Editor"],
-    answer: 1,
-  },
 
-  // Machine Learning Basics
-  {
-    q: "Machine Learning is a subset of?",
-    options: ["Data Science", "Artificial Intelligence", "Cloud Computing", "Cyber Security"],
-    answer: 1,
-  },
-  {
-    q: "Which type of learning uses labeled data?",
-    options: ["Unsupervised Learning", "Reinforcement Learning", "Supervised Learning", "Deep Learning"],
-    answer: 2,
-  },
+function IAiMl() {
+  const navigate = useNavigate();
+  const [step, setStep] = useState("levels");
+  const [activeLevel, setActiveLevel] = useState(null);
+  const [unlockedLevel, setUnlockedLevel] = useState(1);
 
-  // Algorithms
-  {
-    q: "Which algorithm is used for classification?",
-    options: ["Linear Regression", "K-Means", "Decision Tree", "Apriori"],
-    answer: 2,
-  },
-  {
-    q: "Which algorithm groups similar data points?",
-    options: ["Logistic Regression", "Naive Bayes", "K-Means Clustering", "SVM"],
-    answer: 2,
-  },
-
-  // Deep Learning
-  {
-    q: "Which neural network is mainly used for image processing?",
-    options: ["RNN", "CNN", "ANN", "SVM"],
-    answer: 1,
-  },
-  {
-    q: "Which activation function is commonly used in hidden layers?",
-    options: ["Sigmoid", "ReLU", "Softmax", "Linear"],
-    answer: 1,
-  },
-
-  // Evaluation & Tools
-  {
-    q: "Which metric evaluates classification models?",
-    options: ["Mean Squared Error", "Accuracy", "RSS", "Variance"],
-    answer: 1,
-  },
-  {
-    q: "Which Python library is popular for Machine Learning?",
-    options: ["NumPy", "Pandas", "Scikit-learn", "Matplotlib"],
-    answer: 2,
-  },
-];
-
-/* ================== QUIZ COMPONENT ================== */
-function IAIML() {
-    const navigate = useNavigate();
-
-  const [current, setCurrent] = useState(0);
+  const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSelect = (i) => {
-    setAnswers({ ...answers, [current]: i });
+  // ✅ 30 Questions (example, you can expand)
+
+  const aimlQuestions = [
+    {
+      q: "What is Machine Learning?",
+      options: [
+        "Programming without data",
+        "Learning from data",
+        "Database system",
+        "Operating system",
+      ],
+      answer: 1,
+    },
+    {
+      q: "Which library is used for ML in Python?",
+      options: ["NumPy", "Scikit-learn", "React", "HTML"],
+      answer: 1,
+    },
+    // 👉 Add up to 30 questions here
+  ];
+
+  const questions = aimlQuestions;
+  const q = questions[currentQ];
+
+
+  /* ===== SUBMIT ===== */
+  const submitQuiz = () => {
+    let score = 0;
+
+    questions.forEach((q, i) => {
+      if (answers[i] === q.answer) score++;
+    });
+
+    if (score >= 18) {
+      alert("✅ Passed!");
+
+      if (activeLevel === unlockedLevel) {
+        setUnlockedLevel(unlockedLevel + 1);
+      }
+
+      setStep("levels");
+      setActiveLevel(null);
+    } else {
+      alert("❌ Failed!");
+    }
+
+    setCurrentQ(0);
+    setAnswers({});
   };
-
-  const next = () => setCurrent(current + 1);
-  const prev = () => setCurrent(current - 1);
-
-  const calculateScore = () => {
-    return questions.reduce(
-      (total, q, i) => total + (answers[i] === q.answer ? 5 : 0),
-      0
-    );
-  };
-
-  const submitQuiz = () => setSubmitted(true);
-
-  const q = questions[current];
 
   return (
-    <div className="roadmap-container">
-       <button
-          className="back-btn"
-          onClick={() => navigate("/student/dashboard")}
-        >
+    <div className="quiz-with-panel">
+
+      {/* LEFT SIDE */}
+      <div className="quiz-left">
+
+        {/* BACK */}
+        <button className="back-btn" onClick={() => navigate(-1)}>
           ← Back
         </button>
-      <h1 className="title">Intermediate AI & Machine Learning Quiz</h1>
 
-      {!submitted ? (
-        <div className="quiz-card">
-          <p className="question">{q.q}</p>
+        <h1 className="quiz-heading">
+          Intermediate AI & Machine Learning Quiz
+        </h1>
 
-          <div className="options">
-            {q.options.map((opt, i) => (
-              <label key={i} className="option">
-                <input
-                  type="radio"
-                  checked={answers[current] === i}
-                  onChange={() => handleSelect(i)}
-                />
-                {opt}
-              </label>
-            ))}
-          </div>
+        <h2 className="question">{q?.q}</h2>
 
-          <div className="quiz-actions">
-            {current > 0 && (
-              <button className="quiz-btn" onClick={prev}>
-                Previous
-              </button>
-            )}
-
-            {current < questions.length - 1 ? (
-              <button className="quiz-btn" onClick={next}>
-                Next
-              </button>
-            ) : (
-              <button className="quiz-btn submit-btn" onClick={submitQuiz}>
-                Submit
-              </button>
-            )}
-          </div>
+        <div className="options">
+          {q?.options.map((opt, i) => (
+            <div
+              key={i}
+              className={`option-card ${answers[currentQ] === i ? "selected" : ""
+                }`}
+              onClick={() =>
+                setAnswers({ ...answers, [currentQ]: i })
+              }
+            >
+              {opt}
+            </div>
+          ))}
         </div>
-      ) : (
-        <div className="quiz-card result">
-          <h2>Quiz Result</h2>
-          <p>
-            Score: {calculateScore()} / {questions.length * 5}
-          </p>
-          <p>
-            {calculateScore() >= questions.length * 5 * 0.75
-              ? "✅ Passed"
-              : "❌ Failed"}
-          </p>
+
+        <div className="next-wrapper">
+          <button
+            className="next-btn"
+            onClick={() => {
+              if (currentQ < questions.length - 1) {
+                setCurrentQ(currentQ + 1);
+              }
+            }}
+          >
+            Next
+          </button>
         </div>
-      )}
+
+      </div>
+
+      {/* RIGHT PANEL */}
+      <div className="right-panel">
+
+        <h3 className="panel-title">Questions</h3>
+
+        <div className="question-grid">
+          {questions.map((_, i) => (
+            <div
+              key={i}
+              className={`q-box 
+            ${i === currentQ ? "active" : ""}
+            ${answers[i] !== undefined ? "answered" : ""}
+          `}
+              onClick={() => setCurrentQ(i)}
+            >
+              {i + 1}
+            </div>
+          ))}
+        </div>
+
+      </div>
+
     </div>
   );
 }
 
-export default IAIML;
+export default IAiMl;

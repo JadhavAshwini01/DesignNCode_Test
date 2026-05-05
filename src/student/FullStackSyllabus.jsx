@@ -153,14 +153,18 @@ function FullStackSyllabus() {
     ];
     return (
         <div className="roadmap-container">
+            {/* BACK BUTTON */}
+            <button className="back-btn" onClick={() => navigate("/beginner")}>
+                ← Back
+            </button>
             {/* TOP BAR */}
             <div className="top-bar">
-                <h1 className="title">Frontend Development</h1>
+                <h1 className="title">FullStack Development</h1>
                 <button
                     className="syllabus-btn"
-                    onClick={() => navigate("/frontend")}
+                    onClick={() => navigate("/fullstack/quiz")}
                 >
-                    Return to Test
+                    -- Back to Quizzes
                 </button>
             </div>
 
@@ -181,8 +185,8 @@ function FullStackSyllabus() {
             </div>
 
             {/* RESOURCES */}
-            <section className="resources">
-                <h3>Resources</h3>
+            <section class="resources">
+                <h2>Resources</h2>
 
                 <a
                     href="https://www.youtube.com/watch?v=bMknfKXIFA8"

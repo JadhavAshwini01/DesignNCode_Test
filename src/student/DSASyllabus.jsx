@@ -1,196 +1,220 @@
 import { useNavigate } from "react-router-dom";
 import "./Courses.css";
-function DevOpsSyllabus() {
+
+function DSASyllabus() {
     const navigate = useNavigate();
-    const roadmap = [
+
+    const syllabus = [
         {
-            title: "Programming & OS Basics",
+            title: "DSA Basics",
             topics: [
-                "Linux fundamentals",
-                "File system, users, permissions",
-                "Processes & system monitoring",
-                "Package management",
-                "Shell scripting (bash)",
-                "Python basics for automation",
-                "Go basics (optional)",
+                "What is Data Structure & Algorithm",
+                "Time & Space Complexity (Big-O)",
+                "Best, Worst, Average Case",
+                "Recursion Basics",
             ],
         },
         {
-            title: "Networking Basics",
+            title: "Arrays",
             topics: [
-                "DNS",
-                "HTTP / HTTPS",
-                "SSL / TLS",
-                "TCP/IP model",
-                "Ports",
-                "Load balancers",
-                "Firewalls",
+                "Basic operations",
+                "Prefix Sum",
+                "Kadane’s Algorithm",
+                "Two Pointer Technique",
+                "Sliding Window",
             ],
         },
         {
-            title: "Version Control",
+            title: "Strings",
             topics: [
-                "Git basics (init, add, commit, push, pull)",
-                "Branching & merging",
-                "Rebasing",
-                "GitHub / GitLab workflow",
+                "String manipulation",
+                "Palindrome problems",
+                "Anagram problems",
+                "Pattern matching",
+                "Sliding window on strings",
             ],
         },
         {
-            title: "YAML (Configuration Language)",
+            title: "Linked List",
             topics: [
-                "YAML syntax & indentation",
-                "Writing configuration files",
-                "Usage in Kubernetes",
-                "Usage in Ansible",
-                "Usage in GitHub Actions",
+                "Singly Linked List",
+                "Doubly Linked List",
+                "Reverse Linked List",
+                "Cycle Detection (Floyd’s Algorithm)",
+                "Merge Two Lists",
             ],
         },
         {
-            title: "Containers (Docker)",
+            title: "Stack & Queue",
             topics: [
-                "Docker basics (images, containers)",
-                "Dockerfile",
-                "Custom images",
-                "Volumes",
-                "Networking",
+                "Stack operations",
+                "Queue operations",
+                "Circular Queue",
+                "Deque",
+                "Applications (Next Greater Element)",
             ],
         },
         {
-            title: "CI / CD Pipelines",
+            title: "Recursion & Backtracking",
             topics: [
-                "GitHub Actions basics",
-                "GitLab CI/CD pipelines",
-                "Jenkins pipelines",
+                "Recursion tree",
+                "Subsets",
+                "Permutations",
+                "N-Queens",
+                "Sudoku Solver",
             ],
         },
         {
-            title: "Cloud Fundamentals",
+            title: "Trees",
             topics: [
-                "AWS / Azure / GCP overview",
-                "Compute services",
-                "Storage services",
-                "Networking services",
-                "IAM (Identity & Access Management)",
+                "Binary Tree",
+                "Tree Traversals (Inorder, Preorder, Postorder)",
+                "Level Order Traversal",
+                "Height & Diameter",
+                "Lowest Common Ancestor",
             ],
         },
         {
-            title: "Orchestration (Kubernetes)",
+            title: "Binary Search Tree",
             topics: [
-                "Kubernetes architecture",
-                "Pods",
-                "Deployments",
-                "Services",
-                "ConfigMaps & Secrets",
-                "Scaling & rolling updates",
+                "BST operations",
+                "Insert/Delete/Search",
+                "Validate BST",
+                "Kth smallest/largest",
             ],
         },
         {
-            title: "Infrastructure as Code (IaC)",
+            title: "Heap / Priority Queue",
             topics: [
-                "Terraform basics",
-                "Ansible playbooks",
-                "Puppet / Chef (optional)",
+                "Min Heap & Max Heap",
+                "Heap operations",
+                "Heap sort",
+                "Top K elements",
             ],
         },
         {
-            title: "Observability & Monitoring",
+            title: "Hashing",
             topics: [
-                "Monitoring with Prometheus",
-                "Visualization with Grafana",
-                "Logging (ELK Stack / Loki)",
-                "Tracing (Jaeger / OpenTelemetry)",
+                "HashMap",
+                "HashSet",
+                "Frequency counting",
+                "Collision handling",
             ],
         },
         {
-            title: "Chaos Engineering",
+            title: "Graphs",
             topics: [
-                "Fault injection concepts",
-                "LitmusChaos",
-                "Chaos Mesh",
+                "Graph representation",
+                "BFS & DFS",
+                "Cycle detection",
+                "Shortest path (Dijkstra)",
+                "Topological sort",
             ],
         },
         {
-            title: "Policy & Governance",
+            title: "Dynamic Programming",
             topics: [
-                "RBAC (Role Based Access Control)",
-                "Pod Security Standards",
-                "Open Policy Agent (OPA)",
-                "Kyverno",
+                "Memoization",
+                "Tabulation",
+                "Fibonacci",
+                "Knapsack",
+                "Longest Common Subsequence",
             ],
         },
         {
-            title: "Service Mesh",
+            title: "Greedy Algorithms",
             topics: [
-                "Service-to-service communication",
-                "Istio",
-                "Linkerd",
-                "Traffic management",
-                "Canary & blue/green deployments",
+                "Activity selection",
+                "Fractional Knapsack",
+                "Huffman Coding",
+            ],
+        },
+        {
+            title: "Advanced Topics",
+            topics: [
+                "Bit Manipulation",
+                "Trie",
+                "Segment Tree",
+                "Disjoint Set (Union-Find)",
             ],
         },
         {
             title: "Mini Projects",
             topics: [
-                "Containerize a Python Flask app",
-                "Build CI/CD pipeline for web app",
-                "Host static website on AWS S3 + CloudFront",
-                "Deploy multi-container app on Kubernetes",
-                "Provision EC2 using Terraform",
-                "Monitor Kubernetes with Prometheus & Grafana",
-                "Simulate pod failure using LitmusChaos",
-                "Deploy Istio & test traffic splitting",
+                "Build a Problem Solver App",
+                "Create DSA Quiz System (like your project)",
+                "Implement all DS in Java",
+                "LeetCode tracker dashboard",
             ],
         },
     ];
 
     return (
         <div className="roadmap-container">
+
+            {/* BACK BUTTON */}
+            <button className="back-btn" onClick={() => navigate("/beginner")}>
+                ← Back
+            </button>
+
             {/* TOP BAR */}
             <div className="top-bar">
-                <h1 className="title">DevOps</h1>
+                <h1 className="title">Data Structure and Algorithms</h1>
                 <button
                     className="syllabus-btn"
-                    onClick={() => navigate("/DevOps")}
+                    onClick={() => navigate("/dsa/quiz")}
                 >
-                    Return to Test
+                    -- Back to Quizzes
                 </button>
             </div>
 
             <h2 className="subtitle">Roadmap</h2>
-            {/* CARD GRID */}
 
+            {/* CARD GRID */}
             <div className="card-grid">
-                {roadmap.map((card, index) => (
+                {syllabus.map((item, index) => (
                     <div className="roadmap-card" key={index}>
-                        <h3>{index + 1}. {card.title}</h3>
+                        <h3>{index + 1}. {item.title}</h3>
                         <ul>
-                            {card.topics.map((topic, i) => (
+                            {item.topics.map((topic, i) => (
                                 <li key={i}>{topic}</li>
                             ))}
                         </ul>
                     </div>
                 ))}
             </div>
+
             {/* RESOURCES */}
             <section className="resources">
-                <h3>Resources</h3>
+                <h2>Resources</h2>
+
                 <a
-                    href="https://www.youtube.com/watch?v=Ou9j73aWgyE&list=PLdpzxOOAlwvIc1TjTwopNSjRJkzES2ZXk"
+                    href="https://www.youtube.com/watch?v=RBSGKlAvoiM"
                     target="_blank"
-                    class="resource-link"
+                    rel="noreferrer"
+                    className="resource-link"
                 >
-                    <div class="resource-card">
-                        <h3>DevOps</h3>
-                        <p>Complete DevOps Course</p>
+                    <div className="resource-card">
+                        <h3>DSA Full Course</h3>
+                        <p>Complete Data Structures & Algorithms</p>
                     </div>
                 </a>
 
-
+                <a
+                    href="https://leetcode.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="resource-link"
+                >
+                    <div className="resource-card">
+                        <h3>LeetCode Practice</h3>
+                        <p>Practice DSA problems for interviews</p>
+                    </div>
+                </a>
 
             </section>
         </div>
     );
 }
 
-export default DevOpsSyllabus;
+export default DSASyllabus;

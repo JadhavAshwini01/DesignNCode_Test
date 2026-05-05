@@ -1,91 +1,48 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
-const otpStore = require("../utils/otpStore");
-const sendOtpMail = require("../utils/sendOtpMail");
 
 /* =====================================================
-   1️⃣ SEND STUDENT OTP (REGISTRATION)
+   1️⃣ REGISTER STUDENT (NO OTP)
 ===================================================== */
-router.post("/send-otp", async (req, res) => {
-  const { email, formData } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ message: "Email required" });
-  }
-
-  const otp = Math.floor(100000 + Math.random() * 900000);
-
-  otpStore[email] = {
-    otp,
-    formData,
-    expiresAt: Date.now() + 5 * 60 * 1000 // 5 minutes
-  };
-
-  try {
-    await sendOtpMail(email, otp);
-    res.json({ message: "OTP sent to student email 📧" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "OTP sending failed" });
-  }
-});
-
-/* =====================================================
-   2️⃣ VERIFY OTP & REGISTER STUDENT
-===================================================== */
-router.post("/verify-otp", (req, res) => {
-  const { email, otp } = req.body;
-
-  const record = otpStore[email];
-  if (!record) {
-    return res.status(400).json({ message: "OTP expired" });
-  }
-
-  if (Date.now() > record.expiresAt) {
-    delete otpStore[email];
-    return res.status(400).json({ message: "OTP expired" });
-  }
-
-  if (record.otp != otp) {
-    return res.status(400).json({ message: "Invalid OTP" });
-  }
-
+router.post("/register", (req, res) => {
   const {
     fullName,
+    email,
     phone,
     college,
     course,
     skillLevel,
     github,
-    password
-  } = record.formData;
+    password,
+    confirmPassword
+  } = req.body;
+
+  if (!fullName || !email || !password || !confirmPassword) {
+    return res.status(400).json({ message: "Required fields missing" });
+  }
+
+  if (password !== confirmPassword) {
+    return res.status(400).json({ message: "Passwords do not match" });
+  }
 
   const sql = `
     INSERT INTO students
-    (student_name, email, phone, college, course, skill_level, github, password)
+    (full_name, email, phone, college, course, skill_level, github, password)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   db.query(
     sql,
-    [
-      fullName,
-      email,
-      phone,
-      college,
-      course,
-      skillLevel,
-      github,
-      password
-    ],
+    [fullName, email, phone, college, course, skillLevel, github, password],
     (err) => {
-      delete otpStore[email];
-
       if (err) {
+        console.error("DB ERROR:", err);
+
         if (err.code === "ER_DUP_ENTRY") {
           return res.status(409).json({ message: "Student already registered" });
         }
+
         return res.status(500).json({ message: "Database error" });
       }
 
@@ -95,7 +52,7 @@ router.post("/verify-otp", (req, res) => {
 });
 
 /* =====================================================
-   3️⃣ ADD STUDENT FOR RATING
+   2️⃣ ADD STUDENT FOR RATING
 ===================================================== */
 router.post("/add", (req, res) => {
   const { student_name, project_name, status } = req.body;
@@ -123,21 +80,16 @@ router.post("/add", (req, res) => {
 });
 
 /* =====================================================
-   4️⃣ UPDATE STUDENT RATING
+   3️⃣ UPDATE STUDENT RATING
 ===================================================== */
 router.put("/rate/:id", (req, res) => {
   const { rating } = req.body;
   const { id } = req.params;
 
-  const sql = `
-    UPDATE ratestudents
-    SET rating = ?
-    WHERE id = ?
-  `;
+  const sql = `UPDATE ratestudents SET rating=? WHERE id=?`;
 
   db.query(sql, [rating, id], (err) => {
     if (err) {
-      console.error(err);
       return res.status(500).json({ message: "DB error" });
     }
 
@@ -146,18 +98,15 @@ router.put("/rate/:id", (req, res) => {
 });
 
 /* =====================================================
-   5️⃣ GET ALL STUDENTS (RATED / UNRATED)
+   4️⃣ GET ALL STUDENTS
 ===================================================== */
 router.get("/all", (req, res) => {
-  db.query(
-    "SELECT * FROM ratestudents ORDER BY created_at DESC",
-    (err, result) => {
-      if (err) {
-        return res.status(500).json({ message: "DB error" });
-      }
-      res.json(result);
+  db.query("SELECT * FROM ratestudents ORDER BY created_at DESC", (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "DB error" });
     }
-  );
+    res.json(result);
+  });
 });
 
 module.exports = router;

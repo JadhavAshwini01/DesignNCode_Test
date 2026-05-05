@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function CloudSyllabus() {
     const navigate = useNavigate();
 
-    const roadmap = [
+    const syllabus = [
         {
             title: "Foundations of Cloud Computing",
             topics: [
@@ -74,40 +74,41 @@ function CloudSyllabus() {
     ];
 
     return (
-        <div className="roadmap-container">
-            {/* TOP BAR */}
-            <div className="top-bar">
-                <h1 className="title">Cloud Computing Roadmap</h1>
+         <div className="roadmap-container">
+      {/* BACK BUTTON */}
+       <button className="back-btn" onClick={() => navigate("/beginner")}>
+        ← Back
+      </button>
+      {/* TOP BAR */}
+      <div className="top-bar">
+        <h1 className="title">Cloud Computing</h1>
+        <button
+          className="syllabus-btn"
+          onClick={() => navigate("/cloud/quiz")}
+        >
+         -- Back to Quizzes
+        </button>
+      </div>
 
-                <button
-                    className="syllabus-btn"
-                    onClick={() => navigate("/cloud")}
-                >
-                    Return to Test
-                </button>
-            </div>
+      <h2 className="subtitle">Roadmap</h2>
 
-            <h2 className="subtitle">Roadmap</h2>
+      {/* CARD GRID */}
+      <div className="card-grid">
+        {syllabus.map((item, index) => (
+          <div className="roadmap-card" key={index}>
+            <h3>{index + 1}. {item.title}</h3>
+            <ul>
+              {item.topics.map((topic, i) => (
+                <li key={i}>{topic}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
 
-            {/* CARD GRID */}
-            <div className="card-grid">
-                {roadmap.map((card, index) => (
-                    <div className="roadmap-card" key={index}>
-                        <h3>
-                            {index + 1}. {card.title}
-                        </h3>
-                        <ul>
-                            {card.topics.map((topic, i) => (
-                                <li key={i}>{topic}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-            </div>
-
-            {/* RESOURCES */}
-            <section className="resources">
-                <h3>Resources</h3>
+      {/* RESOURCES */}
+      <section class="resources">
+        <h2>Resources</h2>
                 <a
                     href="https://www.youtube.com/watch?v=2LaAJq1lB1Q"
                     target="_blank"

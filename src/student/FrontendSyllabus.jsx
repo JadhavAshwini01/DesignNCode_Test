@@ -78,14 +78,18 @@ function FrontendSyllabus() {
 
   return (
     <div className="roadmap-container">
+      {/* BACK BUTTON */}
+       <button className="back-btn" onClick={() => navigate("/beginner")}>
+        ← Back
+      </button>
       {/* TOP BAR */}
       <div className="top-bar">
         <h1 className="title">Frontend Development</h1>
         <button
           className="syllabus-btn"
-          onClick={() => navigate("/frontend")}
+          onClick={() => navigate("/frontend/quiz")}
         >
-          Return to Test
+         -- Back to Quizzes
         </button>
       </div>
 

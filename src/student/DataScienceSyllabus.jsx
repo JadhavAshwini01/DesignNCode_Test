@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function DataScienceSyllabus() {
     const navigate = useNavigate();
 
-    const roadmap = [
+    const syllabus = [
         {
             title: "Foundations",
             topics: [
@@ -55,15 +55,18 @@ function DataScienceSyllabus() {
 
     return (
         <div className="roadmap-container">
+            {/* BACK BUTTON */}
+            <button className="back-btn" onClick={() => navigate("/beginner")}>
+                ← Back
+            </button>
             {/* TOP BAR */}
             <div className="top-bar">
                 <h1 className="title">Data Science / Data Analyst</h1>
-
                 <button
                     className="syllabus-btn"
-                    onClick={() => navigate("/datascience")}
+                    onClick={() => navigate("/datascience/quiz")}
                 >
-                    Return to Test
+                    -- Back to Quizzes
                 </button>
             </div>
 
@@ -71,13 +74,11 @@ function DataScienceSyllabus() {
 
             {/* CARD GRID */}
             <div className="card-grid">
-                {roadmap.map((card, index) => (
+                {syllabus.map((item, index) => (
                     <div className="roadmap-card" key={index}>
-                        <h3>
-                            {index + 1}. {card.title}
-                        </h3>
+                        <h3>{index + 1}. {item.title}</h3>
                         <ul>
-                            {card.topics.map((topic, i) => (
+                            {item.topics.map((topic, i) => (
                                 <li key={i}>{topic}</li>
                             ))}
                         </ul>
@@ -86,8 +87,8 @@ function DataScienceSyllabus() {
             </div>
 
             {/* RESOURCES */}
-            <section className="resources">
-                <h3>Resources</h3>
+            <section class="resources">
+                <h2>Resources</h2>
                 <a
                     href="https://youtu.be/VaSjiJMrq24?si=B-bJNbg8yx3C9zlH"
                     target="_blank"

@@ -6,18 +6,18 @@ const Beginner = () => {
   const navigate = useNavigate();
 
   const routeMap = {
-    frontend: "/frontend",
-    javadeveloper: "/javadeveloper",
-    fullstack: "/fullstack",
-    devops: "/devops",
-    dsa: "/dsa",
-    testing: "/testing",
-    uiux: "/uiux",
-    datascience: "/datascience",
-    appdevelopment: "/appdevelopment",
-    aiml: "/aiml",
-    mernstack: "/mernstack",
-    cloud: "/cloud",
+    frontend: "/frontend/roadmap",
+    javadeveloper: "/java/roadmap",
+    fullstack: "/fullstack/roadmap",
+    devops: "/devops/roadmap",
+    dsa: "/dsa/roadmap",
+    testing: "/testing/roadmap",
+    uiux: "/uiux/roadmap",
+    datascience: "/datascience/roadmap",
+    appdevelopment: "/appdevelopment/roadmap",
+    aiml: "/ai-ml/roadmap",
+    mernstack: "/mernstack/roadmap",
+    cloud: "/cloud/roadmap",
   };
 
   const domains = [

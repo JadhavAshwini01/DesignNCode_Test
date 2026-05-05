@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./Courses.css";
 function DevOpsSyllabus() {
     const navigate = useNavigate();
-    const roadmap = [
+    const syllabus = [
         {
             title: "Programming & OS Basics",
             topics: [
@@ -145,36 +145,41 @@ function DevOpsSyllabus() {
     ];
 
     return (
-        <div className="roadmap-container">
-            {/* TOP BAR */}
-            <div className="top-bar">
-                <h1 className="title">DevOps</h1>
-                <button
-                    className="syllabus-btn"
-                    onClick={() => navigate("/DevOps")}
-                >
-                    Return to Test
-                </button>
-            </div>
+         <div className="roadmap-container">
+      {/* BACK BUTTON */}
+       <button className="back-btn" onClick={() => navigate("/beginner")}>
+        ← Back
+      </button>
+      {/* TOP BAR */}
+      <div className="top-bar">
+        <h1 className="title">DevOps</h1>
+        <button
+          className="syllabus-btn"
+          onClick={() => navigate("/devops/quiz")}
+        >
+         -- Back to Quizzes
+        </button>
+      </div>
 
-            <h2 className="subtitle">Roadmap</h2>
-            {/* CARD GRID */}
+      <h2 className="subtitle">Roadmap</h2>
 
-            <div className="card-grid">
-                {roadmap.map((card, index) => (
-                    <div className="roadmap-card" key={index}>
-                        <h3>{index + 1}. {card.title}</h3>
-                        <ul>
-                            {card.topics.map((topic, i) => (
-                                <li key={i}>{topic}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
-            </div>
-            {/* RESOURCES */}
-            <section className="resources">
-                <h3>Resources</h3>
+      {/* CARD GRID */}
+      <div className="card-grid">
+        {syllabus.map((item, index) => (
+          <div className="roadmap-card" key={index}>
+            <h3>{index + 1}. {item.title}</h3>
+            <ul>
+              {item.topics.map((topic, i) => (
+                <li key={i}>{topic}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      {/* RESOURCES */}
+      <section class="resources">
+        <h2>Resources</h2>
                 <a
                     href="https://www.youtube.com/watch?v=Ou9j73aWgyE&list=PLdpzxOOAlwvIc1TjTwopNSjRJkzES2ZXk"
                     target="_blank"

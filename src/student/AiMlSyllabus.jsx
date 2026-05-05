@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function AiMlSyllabus() {
   const navigate = useNavigate();
 
-  const roadmap = [
+  const syllabus = [
     {
       title: "Programming & Libraries",
       topics: [
@@ -86,15 +86,18 @@ function AiMlSyllabus() {
 
   return (
     <div className="roadmap-container">
+      {/* BACK BUTTON */}
+       <button className="back-btn" onClick={() => navigate("/beginner")}>
+        ← Back
+      </button>
       {/* TOP BAR */}
       <div className="top-bar">
-        <h1 className="title">AI / Machine Learning Roadmap</h1>
-
+        <h1 className="title"> AI-ML Development</h1>
         <button
           className="syllabus-btn"
-          onClick={() => navigate("/aiml")}
+          onClick={() => navigate("/aiml/quiz")}
         >
-          Return to Test
+         -- Back to Quizzes
         </button>
       </div>
 
@@ -102,13 +105,11 @@ function AiMlSyllabus() {
 
       {/* CARD GRID */}
       <div className="card-grid">
-        {roadmap.map((card, index) => (
+        {syllabus.map((item, index) => (
           <div className="roadmap-card" key={index}>
-            <h3>
-              {index + 1}. {card.title}
-            </h3>
+            <h3>{index + 1}. {item.title}</h3>
             <ul>
-              {card.topics.map((topic, i) => (
+              {item.topics.map((topic, i) => (
                 <li key={i}>{topic}</li>
               ))}
             </ul>
@@ -117,8 +118,10 @@ function AiMlSyllabus() {
       </div>
 
       {/* RESOURCES */}
-      <section className="resources">
+      <section class="resources">
         <h2>Resources</h2>
+    
+    
         <a
           href="https://youtu.be/UrsmFxEIp5k"
           target="_blank"

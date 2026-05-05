@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function AppDevSyllabus() {
   const navigate = useNavigate();
 
-  const roadmap = [
+  const syllabus = [
     {
       title: "Native Android Development (Java)",
       topics: [
@@ -85,15 +85,18 @@ function AppDevSyllabus() {
 
   return (
     <div className="roadmap-container">
+      {/* BACK BUTTON */}
+      <button className="back-btn" onClick={() => navigate("/beginner")}>
+        ← Back
+      </button>
       {/* TOP BAR */}
       <div className="top-bar">
-        <h1 className="title">App Development Roadmap</h1>
-
+        <h1 className="title">App Development</h1>
         <button
           className="syllabus-btn"
-          onClick={() => navigate("/appdevelopment")}
+          onClick={() => navigate("/appdev/quiz")}
         >
-          Return to Test
+          -- Back to Quizzes
         </button>
       </div>
 
@@ -101,13 +104,11 @@ function AppDevSyllabus() {
 
       {/* CARD GRID */}
       <div className="card-grid">
-        {roadmap.map((card, index) => (
-          <div key={index} className="roadmap-card">
-            <h3>
-              {index + 1}. {card.title}
-            </h3>
+        {syllabus.map((item, index) => (
+          <div className="roadmap-card" key={index}>
+            <h3>{index + 1}. {item.title}</h3>
             <ul>
-              {card.topics.map((topic, i) => (
+              {item.topics.map((topic, i) => (
                 <li key={i}>{topic}</li>
               ))}
             </ul>
@@ -116,8 +117,9 @@ function AppDevSyllabus() {
       </div>
 
       {/* RESOURCES */}
-      <section className="resources">
-        <h3>Resources</h3>
+      <section class="resources">
+        <h2>Resources</h2>
+
         <a
           href="https://www.youtube.com/results?search_query=flutter+full+course"
           target="_blank"

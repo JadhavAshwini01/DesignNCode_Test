@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function UiUxSyllabus() {
   const navigate = useNavigate();
 
-  const roadmap = [
+  const syllabus = [
     {
       title: "Fundamentals",
       topics: [
@@ -64,12 +64,19 @@ function UiUxSyllabus() {
   ];
 
   return (
-    <div className="roadmap-container">
+     <div className="roadmap-container">
+      {/* BACK BUTTON */}
+       <button className="back-btn" onClick={() => navigate("/beginner")}>
+        ← Back
+      </button>
       {/* TOP BAR */}
       <div className="top-bar">
         <h1 className="title">UI/UX Design</h1>
-        <button className="syllabus-btn" onClick={() => navigate("/uiux")}>
-          Return to Test
+        <button
+          className="syllabus-btn"
+          onClick={() => navigate("/uiux/quiz")}
+        >
+         -- Back to Quizzes
         </button>
       </div>
 
@@ -77,13 +84,11 @@ function UiUxSyllabus() {
 
       {/* CARD GRID */}
       <div className="card-grid">
-        {roadmap.map((card, index) => (
+        {syllabus.map((item, index) => (
           <div className="roadmap-card" key={index}>
-            <h3>
-              {index + 1}. {card.title}
-            </h3>
+            <h3>{index + 1}. {item.title}</h3>
             <ul>
-              {card.topics.map((topic, i) => (
+              {item.topics.map((topic, i) => (
                 <li key={i}>{topic}</li>
               ))}
             </ul>
@@ -92,8 +97,8 @@ function UiUxSyllabus() {
       </div>
 
       {/* RESOURCES */}
-      <section className="resources">
-        <h3>Resources</h3>
+      <section class="resources">
+        <h2>Resources</h2>
         <a
           href="https://youtu.be/truRwcI7-kg?si=1nVaKhYjVEeHEOz0"
           target="_blank"
